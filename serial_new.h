@@ -8,6 +8,9 @@
 #include "hardware/gpio.h"
 #include "hardware/timer.h"
 
+// data structure to represent a serial interface
+// can be either transmitter or reciever
+// TODO: add structure that does both
 struct serial_interface {
 	uint8_t start_bits;
 	uint8_t data_bits;
@@ -29,6 +32,9 @@ struct serial_interface {
 };
 
 
+// initializes a serial interface as a transmitter
+// struct serial_interface* interface: structure to be initialized
+// uint8_t port_out: gpio pin to be used for sending data
 void serial_transmitter_interface(struct serial_interface* interface, uint8_t port_out) {
 	interface->start_bits = 1;
 	interface->data_bits = 8;
@@ -53,6 +59,10 @@ void serial_transmitter_interface(struct serial_interface* interface, uint8_t po
 }
 
 
+// initializes a serial interface as a reciever
+// struct serial_interface* interface: structure to be initialized
+// uint8_t port_in: pio pin to be used for recieving data
+// void (*callback)(uint8_t): pointer to a void-returning function that handles recieved data
 void serial_reciever_interface(struct serial_interface* interface, uint8_t port_in, void (*callback)(uint8_t)) {
 	interface->start_bits = 1;
 	interface->data_bits = 8;
@@ -78,6 +88,10 @@ void serial_reciever_interface(struct serial_interface* interface, uint8_t port_
 }
 
 
+// send serial data
+// currently only 8 bits
+// struct serial_interface* interface: interface to be sent over, must be sender
+// uint8_t data: data (8 bits / a character)
 void serial_send(struct serial_interface* interface, uint8_t data) {
 	if(!interface->is_sender) return;
 	if(interface->is_sending) return;
@@ -107,6 +121,13 @@ void serial_send(struct serial_interface* interface, uint8_t data) {
 }
 
 
+// must be called frequently enough to match the baud rate,
+// which is currently hardcoded to 500 us per bit (2.000 baud if I am not mistaken)
+// if the specified interface works as a transmitter and there is stuff to send,
+// it will send bit after bit until it is done
+// if it works as a reciever, it will try to read what is available and call the callback function
+// should be called inside some sort of main loop
+// struct serial_interface* interface: interface to be worked with
 void serial_tick(struct serial_interface* interface) {
 	if(interface->is_sender) {
 		
