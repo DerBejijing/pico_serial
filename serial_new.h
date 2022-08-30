@@ -8,27 +8,6 @@
 #include "hardware/gpio.h"
 #include "hardware/timer.h"
 
-
-/*
- serial communication library
-
- create a struct for transmitter or reciever and proceed as described:
-	transmitter:
-		struct serial_interface transmitter;
-		serial_transmitter_interface(&transmitter, PORT);
-
-		serial_send(&transmitter, DATA);
-
-		while(1) serial_tick(&transmitter);
-
-	reciever:
-		struct serial_interface reciever;
-		serial_reciever_interface(&reciever, PORT, CALLBACK);
-
-		while(1) serial_tick(&reciever);
-*/
-
-
 struct serial_interface {
 	uint8_t start_bits;
 	uint8_t data_bits;
