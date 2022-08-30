@@ -4,6 +4,7 @@ Simple serial data transmission library for the raspberry pico
 
 # About  
 I wrote this simple, small library to allow simple serial communication between two or more raspberry picos.  
+I assume you will not have any reason to use this, other than to use it as a source of information.  
 I did this as I figured it would allow me maximum flexibility and teach me about serial data transmission.  
 This library and the provided examples are **licenced under GPL3**.  
 In the following I will go about  
