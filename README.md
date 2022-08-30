@@ -7,12 +7,12 @@ I wrote this simple, small library to allow simple serial communication between 
 I did this as I figured it would allow me maximum flexibility and teach me about serial data transmission.  
 This library and the provided examples are **licenced under GPL3**.  
 In the following I will go about  
- - how to use the library
- - the serial protocol I used
- - how to expand the library
- - what is about to come
+- how to use the library
+- the serial protocol I used
+- how to expand the library
+- what is about to come
  
- 
+---
  
 ## using the library  
 The simplest way to understand the library is looking at the examples in the examples directory.  
@@ -64,6 +64,7 @@ Then, copy the serial_reciever.uf2 file to RP-1. To do so, push the BOOTSEL butt
 Plug in RP-2 **first**, and connect to it using a utility like screen.  
 Then, plug in RP-1, and wait for the data to be transmitted and displayed.  
 
+---
 
 ## The protocol  
 The protocol is much like the normal serial communication protocol, with the difference that the data-line normally sits at 0V. When ever data is transmitted the following bits are sent:  
@@ -76,4 +77,14 @@ As soon as the reciever detects a voltage rise, it will sync with the time the f
 It then samples bit after bit until it expects the end of the packet.  
 That is why it is very important, that both devices use the same baud rate and packet format.  
 
+---
 
+## Development  
+You can include and modify the library as you wish, but make sure to not violate the GPL3 licence.  
+The code is documented and will be explained further, to make it easier.  
+
+---
+
+## What is about to come  
+- I will add functions to give the user more controll over stuff like baud and the packet format.  
+- I will add another struct to aggregate a reciever and transmitter.  
