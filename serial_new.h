@@ -32,9 +32,9 @@ struct serial_interface {
 void serial_transmitter_interface(struct serial_interface* interface, uint8_t port_out) {
 	interface->start_bits = 1;
 	interface->data_bits = 8;
-	interface->parity_bits = 2;
+	interface->parity_bits = 0;
 	interface->stop_bits = 1;
-	interface->total_bits = 12;
+	interface->total_bits = 10;
 	interface->port_in = 0;
 	interface->port_out = port_out;
 	interface->is_sender = 1;
@@ -56,9 +56,9 @@ void serial_transmitter_interface(struct serial_interface* interface, uint8_t po
 void serial_reciever_interface(struct serial_interface* interface, uint8_t port_in, void (*callback)(uint8_t)) {
 	interface->start_bits = 1;
 	interface->data_bits = 8;
-	interface->parity_bits = 2;
+	interface->parity_bits = 0;
 	interface->stop_bits = 1;
-	interface->total_bits = 12;
+	interface->total_bits = 10;
 	interface->port_in = port_in;
 	interface->port_out = 0;
 	interface->is_sender = 0;
