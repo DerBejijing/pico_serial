@@ -59,3 +59,21 @@ Move to the pico_serial/examples/reciever directory and run these commands (assu
 `make`
 
 Then, copy the serial_reciever.uf2 file to RP-1. To do so, push the BOOTSEL button while connecting it.  
+
+### Test  
+Plug in RP-2 **first**, and connect to it using a utility like screen.  
+Then, plug in RP-1, and wait for the data to be transmitted and displayed.  
+
+
+## The protocol  
+The protocol is much like the normal serial communication protocol, with the difference that the data-line normally sits at 0V. When ever data is transmitted the following bits are sent:  
+- some start bits pulling the data line high  
+- some data bits with binary data  
+- some parity bits, that are not used yet  
+- some stop bits pulling the data line low  
+
+As soon as the reciever detects a voltage rise, it will sync with the time the first bit was sent.  
+It then samples bit after bit until it expects the end of the packet.  
+That is why it is very important, that both devices use the same baud rate and packet format.  
+
+
