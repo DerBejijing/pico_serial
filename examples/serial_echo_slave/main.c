@@ -40,10 +40,10 @@ int main() {
 	// init
 	stdio_init_all();
 
-	// make receiver listen on gpio-pin 0
-	// make transmitter send over gpio-pin 1
-	serial_receiver_interface(&receiver, 0, serial_handler);
-	serial_transmitter_interface(&transmitter, 1);
+	// make receiver listen on gpio-pin 1
+	// make transmitter send over gpio-pin 0
+	serial_receiver_interface(&receiver, 1, serial_handler);
+	serial_transmitter_interface(&transmitter, 0);
 
 	// continuously update the serial interface
 	// this should be done in a main loop
@@ -55,6 +55,7 @@ int main() {
 			
 			// send data
 			serial_send(&transmitter, data);
+			printf("sending data: %d\n", data);
 			
 			// increment data
 			++data;
