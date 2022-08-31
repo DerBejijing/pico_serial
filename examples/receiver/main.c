@@ -24,10 +24,10 @@ int main() {
 	struct serial_interface receiver;
 
 	// make it listen on gpio-pin 0
-	serial_receiver_interface(&transmitter, 0, serial_handler);
+	serial_receiver_interface(&receiver, 0, serial_handler);
 
 	// continuously update the serial interface
 	// this should be done in a main loop
-	for(;;) serial_tick(&transmitter);
+	for(;;) serial_tick(&receiver);
 
 }
