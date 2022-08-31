@@ -26,8 +26,8 @@ For simplification I will refer to PI-1 as the transmitter and PI-2 as the recei
 
 ### Wiring  
 In the most basic configuration, we need one wire for the data from PI-1 to PI-2 and a common ground.  
-The communication is unidirectional, so there is one sender and one receiver. Later, I will explain  
-how to do both. For the data any gpio pin can be used.  
+The communication is unidirectional, so there is one sender and one receiver. There is another example (examples/serial_echo_master and examples/serial_echo_slave) showing how to get two devices communicating using a transmitter **and** receiver interface. If you follow and understand the steps below, running these examples will be self-explainantory.  
+For the data any gpio pin can be used.  
 
 ### Workspace setup  
 You will need to setup the development environment for raspberry pico. If you are not using Linux,
