@@ -43,6 +43,7 @@ If you are not using bash, the global variable export works differently.
 `git submodule update --init`  
 `cd ..`  
 `echo 'export PICO_SDK_PATH='$(pwd)'/pico-sdk' >> ~/.bashrc`  
+Restart your shell to load the exported path using `bash` (assuming bash, as stated above).  
 `git clone https://github.com/DerBejijing/pico_serial`  
 
 ### Flashing the transmitter  
@@ -58,7 +59,7 @@ Move to the pico_serial/examples/receiver directory and run these commands (assu
 `mkdir build`  
 `cd build`  
 `cmake ..`  
-`make`
+`make`  
 Then, copy the serial_receiver.uf2 file to RP-1. To do so, push the BOOTSEL button while connecting it.  
 
 ### Test  
