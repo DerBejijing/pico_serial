@@ -9,7 +9,7 @@
 #include "hardware/timer.h"
 
 // data structure to represent a serial interface
-// can be either transmitter or reciever
+// can be either transmitter or receiver
 // TODO: add structure that does both
 struct serial_interface {
 	uint8_t start_bits;
@@ -21,7 +21,7 @@ struct serial_interface {
 	uint8_t port_out;
 	uint8_t is_sender;
 	uint8_t is_sending;
-	uint8_t is_recieving;
+	uint8_t is_receiving;
 	uint8_t serial_data;
 	uint16_t serial_packet;
 	uint8_t serial_packet_pos;
@@ -45,7 +45,7 @@ void serial_transmitter_interface(struct serial_interface* interface, uint8_t po
 	interface->port_out = port_out;
 	interface->is_sender = 1;
 	interface->is_sending = 0;
-	interface->is_recieving = 0;
+	interface->is_receiving = 0;
 	interface->serial_data = 0;
 	interface->serial_packet = 0;
 	interface->serial_packet_pos = 0;
@@ -60,11 +60,11 @@ void serial_transmitter_interface(struct serial_interface* interface, uint8_t po
 }
 
 
-// initializes a serial interface as a reciever
+// initializes a serial interface as a rceiever
 // struct serial_interface* interface: structure to be initialized
-// uint8_t port_in: pio pin to be used for recieving data
-// void (*callback)(uint8_t): pointer to a void-returning function that handles recieved data
-void serial_reciever_interface(struct serial_interface* interface, uint8_t port_in, void (*callback)(uint8_t)) {
+// uint8_t port_in: pio pin to be used for receiving data
+// void (*callback)(uint8_t): pointer to a void-returning function that handles received data
+void serial_receiver_interface(struct serial_interface* interface, uint8_t port_in, void (*callback)(uint8_t)) {
 	interface->start_bits = 1;
 	interface->data_bits = 8;
 	interface->parity_bits = 0;
@@ -74,7 +74,7 @@ void serial_reciever_interface(struct serial_interface* interface, uint8_t port_
 	interface->port_out = 0;
 	interface->is_sender = 0;
 	interface->is_sending = 0;
-	interface->is_recieving = 0;
+	interface->is_receiving = 0;
 	interface->serial_data = 0;
 	interface->serial_packet = 0;
 	interface->serial_packet_pos = 0;
@@ -169,8 +169,8 @@ void serial_tick(struct serial_interface* interface) {
 	// interface is a transmitter
 	} else {
 		
-		// check if the interface is recieving data
-		if(interface->is_recieving) {
+		// check if the interface is receiving data
+		if(interface->is_receiving) {
 
 			// check if enough time has passed
 			uint64_t current_time = time_us_64();
@@ -185,11 +185,11 @@ void serial_tick(struct serial_interface* interface) {
 				// increase the packet index
 				++interface->serial_packet_pos;
 				
-				// reset all data if all data is recieved
+				// reset all data if all data is received
 				if(interface->serial_packet_pos > interface->total_bits) {
 
 					interface->callback_pointer(interface->serial_data);
-					interface->is_recieving = 0;
+					interface->is_receiving = 0;
 					interface->serial_packet_pos = 0;
 					interface->serial_data_pos = 0;
 					interface->serial_data = 0;
@@ -207,7 +207,7 @@ void serial_tick(struct serial_interface* interface) {
 			// check if a packet transfer is being initiated
 			if(gpio_get(interface->port_in)) {
 				
-				interface->is_recieving = 1;
+				interface->is_receiving = 1;
 				
 				// set last time clocked to a reasonable value, so the reading
 				// does not happen too early or too late
